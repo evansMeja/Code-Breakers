@@ -1,39 +1,27 @@
 class Solver:
     def __init__(self):
         self.stack = []
-        
-    def reverseB(self,i):
-        if i == ")":
-            return "("
-        
     def insert(self,brace):
-        if brace["type"] == "opening":
+        if brace == "(":
             self.stack = self.stack + [brace]
             return True
         else:
             if len(self.stack) == 0:
                 return False
             else:
-                if self.stack[-1]["string"] == self.reverseB(brace["string"]):
+                if self.stack[-1] == '(':
                     self.stack = self.stack[:-1]
                     return True
-                else:
-                    return False
-    def create_dict(self,i):
-        if i == "(":
-            return {"type":"opening","string":i}
-        if i == ")":
-            return {"type":"closing","string":i}
-        
+                return False       
     def is_empty(self,):
         return len(self.stack) == 0
+    
 
 class ParenthesisValidator:
     def isValid(self, s: str) -> bool:
         sol = Solver()
         for i in s:
-            solDict = sol.create_dict(i)
-            res = sol.insert(solDict)
+            res = sol.insert(i)
             if res == False:
                 return False
         return sol.is_empty()
@@ -47,11 +35,17 @@ class Solution:
             testParenthesis = s[i:]
             c = 0
             test2 = ''
+            t=[]
             for x in testParenthesis:
                 test2 = test2 + x
-                if p.isValid(test2):
+                if test2.count("(") == test2.count(")") and test2 not in t and p.isValid(test2):
                     length = len(test2)
                     if length > lg:
                         lg = length
+                    t.append(test2) 
                 c = c + 1
-        return lg
+        return lg     
+
+
+sol = Solution()
+print(sol.longestValidParentheses("()"))
