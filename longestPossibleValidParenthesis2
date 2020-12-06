@@ -1,0 +1,66 @@
+"""
+Fastest longest valid parenthesis solver
+
+Given an input lets say x = ()()(()), with on ( and ) symbols
+
+the algorithm finds the longest possible valid parenthesis
+"""
+
+class Solver:
+    def __init__(self):
+        self.stack = []
+    def insert(self,brace):
+        if brace == "(":
+            self.stack = self.stack + [brace]
+            return True
+        else:
+            if len(self.stack) == 0:
+                return False
+            else:
+                if self.stack[-1] == '(':
+                    self.stack = self.stack[:-1]
+                    return True
+                return False       
+    def is_empty(self,):
+        return len(self.stack) == 0
+    
+
+class ParenthesisValidator:
+    def isValid(self, s: str) -> bool:
+        sol = Solver()
+        for i in s:
+            res = sol.insert(i)
+            if res == False:
+                return False
+        return sol.is_empty()
+
+class Solution:
+    def longestValidParentheses(self, s: str) -> int:
+        p = ParenthesisValidator()
+        lg=0
+        sLen = len(s)
+        while sLen > 1:
+            testParenthesis = s[:sLen]
+            
+            lengthOfTestCase = len(testParenthesis)
+            if lengthOfTestCase < lg:
+                break
+            c = len(testParenthesis)
+            while c > 1:
+                testString = testParenthesis[:c]
+                print(testString)
+                lengthOfInnerTestCase = len(testString)
+                if lengthOfInnerTestCase < lg:
+                    break
+                if testString[0] != ')' and testString[-1] != '(' and testString.count("(") == testString.count(")"):
+                    if p.isValid(testString):
+                        l = len(testString)
+                        if l > lg:
+                            lg = l
+                            break
+                c = c - 1
+            sLen = sLen - 1
+        return lg
+    
+sol = Solution()
+print(sol.longestValidParentheses("(()"))
