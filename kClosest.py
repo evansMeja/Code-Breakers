@@ -23,11 +23,15 @@
 
 
 
-class Solution:
+class Solution1:
     def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:
         closest = [{"item":points[x],'index':x, 'square': (points[x][0] * points[x][0]) + (points[x][1] * points[x][1])} for x in range(0,len(points))]
         return [i['item'] for i in sorted(closest, key=lambda k: k['square'])[:K]]
         
+        
+class Solution2:
+    def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:
+        return [i['item'] for i in sorted( [{"item":points[x],'square': (points[x][0] * points[x][0]) + (points[x][1] * points[x][1])} for x in range(0,len(points))], key=lambda k: k['square'])[:K]]
         
         
         
