@@ -1,3 +1,3 @@
 # CodeBreakers
 
-This repository holds possible interview problem.
+problem solving python, c++ & java.
